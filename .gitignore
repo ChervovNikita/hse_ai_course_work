@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+# raw parser output (large, rebuildable); the exported csv.gz files are committed
+data/raw/
+data/parse.log
+# >100MB, committed as data/wb_reviews.csv.gz instead
+data/wb_reviews.csv
+data/amazon_raw/
