@@ -31,7 +31,7 @@ th { font-weight: 600 }
 </section>
 
 <section id="data" data-transition="fade" style="background:#F7F5F0;color:#1E2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
-<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.15;color:#1E2433">Данные: 300 тыс. отзывов и сильный перекос к пятёркам</h2>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.15;color:#1E2433">Дисбаланс: пятёрок 76% на WB и 65% на Amazon</h2>
 <div style="display:flex;gap:96px;align-items:end">
 <div style="display:flex;flex-direction:column;gap:36px;width:520px">
 <div style="display:flex;flex-direction:column;gap:4px">
@@ -43,8 +43,8 @@ th { font-weight: 600 }
 <p style="font-size:28px;color:#4A5263">случайных товара из 93 категорий, не больше 100 отзывов на товар</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:4px">
-<p style="font-family:'Rubik', Arial, sans-serif;font-size:88px;font-weight:600;line-height:1.05;color:#7B3FA8">8 слов</p>
-<p style="font-size:28px;color:#4A5263">медианная длина отзыва (у Amazon 22)</p>
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:88px;font-weight:600;line-height:1.05;color:#E07B22">300 034</p>
+<p style="font-size:28px;color:#4A5263">отзыва Amazon для сравнения, та же логика выборки</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:column;gap:20px;flex:1">
@@ -84,7 +84,7 @@ th { font-weight: 600 }
 </div>
 </div>
 </div>
-<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:26px;color:#7B3FA8;font-weight:500">Константа «всегда 5» даёт accuracy 0.76, поэтому метрики качества: macro-F1 и MAE</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:26px;color:#7B3FA8;font-weight:500">Форма одинаковая: U-образная, самая редкая оценка 2. Метрики macro-F1 и MAE, обучение с весами классов</p>
 
 </section>
 
@@ -111,6 +111,53 @@ th { font-weight: 600 }
 
 </section>
 
+<section id="length" data-transition="fade" style="background:#F7F5F0;color:#1E2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.15;color:#1E2433">Длина: отзывы короткие, пятёрки короче всех</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:30px;color:#1E2433">
+<tr style="background:#ECE6F2"><th style="width:28%;text-align:left">Слов в отзыве</th><th style="width:18%;text-align:right">медиана</th><th style="width:18%;text-align:right">p95</th><th style="width:18%;text-align:right">p99</th><th style="width:18%;text-align:right">короче 3 слов</th></tr>
+<tr><td style="text-align:left">Wildberries</td><td style="text-align:right">8</td><td style="text-align:right">35</td><td style="text-align:right">64</td><td style="text-align:right">7.5%</td></tr>
+<tr><td style="text-align:left">Amazon</td><td style="text-align:right">22</td><td style="text-align:right">107</td><td style="text-align:right">214</td><td style="text-align:right">1.9%</td></tr>
+</table>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:30px;color:#1E2433">
+<tr style="background:#ECE6F2"><th style="width:28%;text-align:left">Медиана по оценкам</th><th style="width:14.4%;text-align:right">1</th><th style="width:14.4%;text-align:right">2</th><th style="width:14.4%;text-align:right">3</th><th style="width:14.4%;text-align:right">4</th><th style="width:14.4%;text-align:right">5</th></tr>
+<tr><td style="text-align:left">Wildberries</td><td style="text-align:right">10</td><td style="text-align:right">11</td><td style="text-align:right">11</td><td style="text-align:right">11</td><td style="text-align:right"><b>7</b></td></tr>
+<tr><td style="text-align:left">Amazon</td><td style="text-align:right">26</td><td style="text-align:right">30</td><td style="text-align:right">29</td><td style="text-align:right">29</td><td style="text-align:right"><b>19</b></td></tr>
+</table>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFDF9;border:1px solid #E2DDD3;border-radius:16px;padding:28px 32px">
+<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Длина отделяет только пятёрки:</b> у оценок 1–4 медиана почти одинаковая.</p>
+</div>
+<div style="flex:1;background:#FFFDF9;border:1px solid #E2DDD3;border-radius:16px;padding:28px 32px">
+<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>«Пустые» отзывы</b> («Отлично», «👍») почти все пятёрки: 8.8% у 5 против ~3.5% у 1–4.</p>
+</div>
+<div style="flex:1;background:#FFFDF9;border:1px solid #E2DDD3;border-radius:16px;padding:28px 32px">
+<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Для моделей</b> хватит 128 токенов на WB и ~384 на Amazon.</p>
+</div>
+</div>
+
+</section>
+
+<section id="words" data-transition="fade" style="background:#F7F5F0;color:#1E2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.15;color:#1E2433">Частые биграммы по оценкам: темы общие для двух площадок</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:26px;color:#1E2433">
+<tr style="background:#ECE6F2"><th style="width:14%;text-align:left"></th><th style="width:17.2%;text-align:left">1</th><th style="width:17.2%;text-align:left">2</th><th style="width:17.2%;text-align:left">3</th><th style="width:17.2%;text-align:left">4</th><th style="width:17.2%;text-align:left">5</th></tr>
+<tr><td style="text-align:left;color:#7B3FA8">WB</td><td style="text-align:left">деньги на ветер<br>ужасное качество</td><td style="text-align:left">пункт выдачи<br>после первой стирки</td><td style="text-align:left">качество хорошее<br>поэтому отказ</td><td style="text-align:left">сняла звезду<br>минус звезда</td><td style="text-align:left">спасибо продавцу<br>рекомендую к покупке</td></tr>
+<tr><td style="text-align:left;color:#E07B22">Amazon</td><td style="text-align:left">waste money<br>stopped working</td><td style="text-align:left">poor quality<br>didn’t work</td><td style="text-align:left">runs small<br>smaller than expected</td><td style="text-align:left">good quality<br>works great</td><td style="text-align:left">highly recommend<br>perfect fit</td></tr>
+</table>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#FFFDF9;border:1px solid #E2DDD3;border-radius:16px;padding:28px 32px">
+<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Крайние оценки</b> различаются лексикой легко: «обман», «бракованный» против «находка», «восторге».</p>
+</div>
+<div style="flex:1;background:#FFFDF9;border:1px solid #E2DDD3;border-radius:16px;padding:28px 32px">
+<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Средние оценки</b> выдают «снижения» и мелкие претензии: «на троечку», «слабоват», «маломерит».</p>
+</div>
+<div style="flex:1;background:#FFFDF9;border:1px solid #E2DDD3;border-radius:16px;padding:28px 32px">
+<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Темы претензий совпадают:</b> размер, качество, «не как на фото». Различается только язык.</p>
+</div>
+</div>
+
+</section>
+
 <section id="features" data-transition="fade" style="background:#F7F5F0;color:#1E2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
 <h2 style="font-family:'Rubik', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.15;color:#1E2433">Признаки: главное в тексте, мета-признаки слабые</h2>
 <div style="display:flex;gap:72px;align-items:start">
@@ -128,13 +175,13 @@ th { font-weight: 600 }
 </div>
 </div>
 <div style="display:flex;flex-direction:column;gap:12px;width:460px">
-<p style="font-size:28px;font-weight:600;color:#1E2433">Медиана слов в отзыве</p>
+<p style="font-size:28px;font-weight:600;color:#1E2433">Заполнены «Достоинства», %</p>
 <div style="display:flex;gap:20px;align-items:end;height:290px;border-bottom:2px solid #C4C0B8">
-<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:76px"><p style="font-size:24px;color:#4A5263">10</p><div style="width:76px;height:218px;background:#7B3FA8;border-radius:6px 6px 0 0"></div></div>
-<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:76px"><p style="font-size:24px;color:#4A5263">11</p><div style="width:76px;height:240px;background:#7B3FA8;border-radius:6px 6px 0 0"></div></div>
-<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:76px"><p style="font-size:24px;color:#4A5263">11</p><div style="width:76px;height:240px;background:#7B3FA8;border-radius:6px 6px 0 0"></div></div>
-<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:76px"><p style="font-size:24px;color:#4A5263">11</p><div style="width:76px;height:240px;background:#7B3FA8;border-radius:6px 6px 0 0"></div></div>
-<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:76px"><p style="font-size:24px;color:#4A5263">7</p><div style="width:76px;height:153px;background:#7B3FA8;border-radius:6px 6px 0 0"></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:76px"><p style="font-size:24px;color:#4A5263">19</p><div style="width:76px;height:114px;background:#E07B22;border-radius:6px 6px 0 0"></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:76px"><p style="font-size:24px;color:#4A5263">21</p><div style="width:76px;height:126px;background:#E07B22;border-radius:6px 6px 0 0"></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:76px"><p style="font-size:24px;color:#4A5263">25</p><div style="width:76px;height:150px;background:#E07B22;border-radius:6px 6px 0 0"></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:76px"><p style="font-size:24px;color:#4A5263">32</p><div style="width:76px;height:192px;background:#E07B22;border-radius:6px 6px 0 0"></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:76px"><p style="font-size:24px;color:#4A5263">42</p><div style="width:76px;height:252px;background:#E07B22;border-radius:6px 6px 0 0"></div></div>
 </div>
 <div style="display:flex;gap:20px">
 <p style="font-size:24px;color:#4A5263;width:76px;text-align:center">1</p><p style="font-size:24px;color:#4A5263;width:76px;text-align:center">2</p><p style="font-size:24px;color:#4A5263;width:76px;text-align:center">3</p><p style="font-size:24px;color:#4A5263;width:76px;text-align:center">4</p><p style="font-size:24px;color:#4A5263;width:76px;text-align:center">5</p>
@@ -160,33 +207,47 @@ th { font-weight: 600 }
 <p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Товар объясняет 13% дисперсии</b> оценки, поэтому train и test делим по товарам.</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#ECE6F2;border-radius:16px;padding:28px 32px">
-<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Средние оценки</b> выдают фразы «сняла звезду», «на троечку», «слабоват».</p>
+<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Категория влияет:</b> доля оценок 1–2 от 7.5% в одежде до 17% в товарах для сада.</p>
 </div>
 </div>
 
 </section>
 
-<section id="baselines" data-transition="fade" style="background:#F7F5F0;color:#1E2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<section id="ablation" data-transition="fade" style="background:#F7F5F0;color:#1E2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:36px">
 <div style="display:flex;flex-direction:column;gap:16px">
-<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.15;color:#1E2433">Бейзлайн: Amazon решается лучше, порядок методов тот же</h2>
-<p style="font-size:28px;color:#4A5263">macro-F1 · TF-IDF + логистическая регрессия · train и test разделены по товарам · жирным — лучший в столбце</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.15;color:#1E2433">Абляция и SHAP: биграммы и поля отзыва дают сигнал</h2>
+<p style="font-size:28px;color:#4A5263">Модель только для анализа: TF-IDF + LogReg с весами классов, split по товарам</p>
 </div>
-<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:30px;color:#1E2433">
-<tr style="background:#ECE6F2"><th style="width:36%;text-align:left">Как обучали</th><th style="width:16%;text-align:right">WB, реальный тест</th><th style="width:16%;text-align:right">WB, сбаланс. тест</th><th style="width:16%;text-align:right">Amazon, реальный</th><th style="width:16%;text-align:right">Amazon, сбаланс.</th></tr>
-<tr><td style="text-align:left">константа «5»</td><td style="text-align:right">0.172</td><td style="text-align:right">0.067</td><td style="text-align:right">0.157</td><td style="text-align:right">0.064</td></tr>
-<tr><td style="text-align:left">полный датасет</td><td style="text-align:right">0.443</td><td style="text-align:right">0.362</td><td style="text-align:right">0.505</td><td style="text-align:right">0.439</td></tr>
-<tr><td style="text-align:left">полный + веса классов</td><td style="text-align:right"><b>0.457</b></td><td style="text-align:right">0.467</td><td style="text-align:right"><b>0.521</b></td><td style="text-align:right">0.528</td></tr>
-<tr><td style="text-align:left">balanced-датасет</td><td style="text-align:right">0.432</td><td style="text-align:right"><b>0.473</b></td><td style="text-align:right">0.509</td><td style="text-align:right"><b>0.543</b></td></tr>
+<div style="display:flex;gap:64px;align-items:start">
+<div style="flex:1.3;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:28px;font-weight:600;color:#1E2433">Абляция на WB</p>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:28px;color:#1E2433">
+<tr style="background:#ECE6F2"><th style="width:60%;text-align:left">Что на входе</th><th style="width:20%;text-align:right">macro-F1</th><th style="width:20%;text-align:right">MAE</th></tr>
+<tr><td style="text-align:left">A: только слова</td><td style="text-align:right">0.428</td><td style="text-align:right">0.460</td></tr>
+<tr><td style="text-align:left">B: + биграммы</td><td style="text-align:right">0.450</td><td style="text-align:right">0.392</td></tr>
+<tr><td style="text-align:left">C: B + has_pros / has_cons</td><td style="text-align:right"><b>0.458</b></td><td style="text-align:right"><b>0.373</b></td></tr>
+<tr><td style="text-align:left">D: B + метки полей в тексте</td><td style="text-align:right">0.455</td><td style="text-align:right">0.374</td></tr>
 </table>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:28px;font-weight:600;color:#1E2433">Доля |SHAP| по группам, %</p>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:28px;color:#1E2433">
+<tr style="background:#ECE6F2"><th style="width:35%;text-align:left">оценка</th><th style="width:13%;text-align:right">1</th><th style="width:13%;text-align:right">2</th><th style="width:13%;text-align:right">3</th><th style="width:13%;text-align:right">4</th><th style="width:13%;text-align:right">5</th></tr>
+<tr><td style="text-align:left">слова</td><td style="text-align:right">68</td><td style="text-align:right">64</td><td style="text-align:right">61</td><td style="text-align:right">65</td><td style="text-align:right">67</td></tr>
+<tr><td style="text-align:left">биграммы</td><td style="text-align:right">27</td><td style="text-align:right">30</td><td style="text-align:right"><b>33</b></td><td style="text-align:right"><b>33</b></td><td style="text-align:right">20</td></tr>
+<tr><td style="text-align:left">флаги</td><td style="text-align:right">6</td><td style="text-align:right">6</td><td style="text-align:right">6</td><td style="text-align:right">3</td><td style="text-align:right">12</td></tr>
+</table>
+</div>
+</div>
 <div style="display:flex;gap:32px">
 <div style="flex:1;background:#FFFDF9;border:1px solid #E2DDD3;border-radius:16px;padding:28px 32px">
-<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Amazon проще:</b> тексты в 3 раза длиннее, редких оценок в 2 раза больше.</p>
+<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Флаги — топ-1 и топ-2 по SHAP</b> из 100 тыс. признаков. Заполненные «Недостатки» снижают логит пятёрки на ~1.0.</p>
 </div>
 <div style="flex:1;background:#FFFDF9;border:1px solid #E2DDD3;border-radius:16px;padding:28px 32px">
-<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Balanced-датасет</b> выигрывает на сбалансированном тесте, хотя данных в 4–7 раз меньше.</p>
+<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Биграммы важнее всего для 3–4:</b> в топе отрицания «не очень», «не соответствует», «не рекомендую».</p>
 </div>
 <div style="flex:1;background:#FFFDF9;border:1px solid #E2DDD3;border-radius:16px;padding:28px 32px">
-<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Самая трудная оценка — 2:</b> модель путает её с 1 и 3 на обеих площадках.</p>
+<p style="font-size:26px;line-height:1.35;color:#1E2433"><b>Честно про биграммы:</b> они связаны со словами, поэтому смотрим долю по группам и абляцию.</p>
 </div>
 </div>
 
@@ -198,21 +259,21 @@ th { font-weight: 600 }
 <div style="flex:1;display:flex;flex-direction:column;gap:24px">
 <p style="font-size:28px;color:#C9A2E8;letter-spacing:3px;text-transform:uppercase;font-weight:500">Что узнали</p>
 <ul style="font-size:30px;line-height:1.4;color:#DDE1E8">
-<li>Три четверти отзывов — пятёрки: accuracy бесполезна</li>
-<li>Сигнал почти весь в тексте, мета-признаки слабые</li>
-<li>Оценки 1 и 5 различаются легко, 2–4 похожи друг на друга</li>
+<li>Дисбаланс одинаковый: 76% пятёрок на WB, 65% на Amazon</li>
+<li>Тексты короткие, «пустые» отзывы почти все пятёрки</li>
+<li>Биграммы и отрицания важны для оценок 2–4</li>
+<li>Поля «Достоинства» и «Недостатки» дают сигнал сверх текста</li>
 <li>Отзывы одного товара связаны между собой</li>
-<li>Форма отзыва на WB поменялась в 2024 году</li>
 </ul>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:24px">
 <p style="font-size:28px;color:#F2A65A;letter-spacing:3px;text-transform:uppercase;font-weight:500">Чекпойнт 3</p>
 <ul style="font-size:30px;line-height:1.4;color:#DDE1E8">
-<li>Метрики macro-F1 и MAE, веса классов</li>
-<li>Модели на эмбеддингах: fastText, ruBERT</li>
-<li>Ординальная постановка для оценок 2–4</li>
+<li>Полные датасеты с весами классов, macro-F1 и MAE</li>
+<li>Бейзлайн TF-IDF, затем fastText и BERT</li>
+<li>has_pros, has_cons и длина как признаки</li>
 <li>Разбиение train и test только по товарам</li>
-<li>Переобучение на свежих данных из-за дрейфа</li>
+<li>Перенос моделей между WB и Amazon</li>
 </ul>
 </div>
 </div>
