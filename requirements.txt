@@ -4,3 +4,7 @@ matplotlib
 seaborn
 scikit-learn
 jupyter
+nltk
+pymorphy3
+gensim
+optuna

@@ -8,3 +8,8 @@ data/parse.log
 # >100MB, committed as data/wb_reviews.csv.gz instead
 data/wb_reviews.csv
 data/amazon_raw/
+# part A experiment caches
+experiments/part_a/cache/
+experiments/part_a/run.log
+# train/test splits, rebuilt by python ml/prepare_splits.py
+data/splits/
