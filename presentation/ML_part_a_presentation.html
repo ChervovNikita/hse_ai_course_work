@@ -1,0 +1,217 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>ML часть A: линейные модели</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+@page { size: 1920px 1080px; margin: 0 }
+html, body { margin: 0; padding: 0 }
+section { width: 1920px; height: 1080px; position: relative; box-sizing: border-box; overflow: hidden; page-break-after: always; break-after: page; background: #F7F5F0; color: #1E2433; font-family: 'IBM Plex Sans', Arial, sans-serif; padding: 112px 128px; display: flex; flex-direction: column; gap: 40px }
+section.dark { background: #1E2433; color: #F7F5F0 }
+h1, h2, h3, p, ul, ol { margin: 0 }
+h2 { font-family: 'Rubik', Arial, sans-serif; font-size: 60px; font-weight: 600; line-height: 1.15 }
+ul { padding-left: 1.1em }
+li { margin-bottom: 8px }
+table { border-collapse: collapse; width: 100%; font-size: 28px }
+th, td { padding: 0.32em 0.6em; border-bottom: 1px solid #D9D4CA; font-weight: 400; text-align: right }
+th { font-weight: 600; white-space: nowrap }
+th:first-child, td:first-child { text-align: left }
+tr.head { background: #ECE6F2 }
+td.top { font-weight: 600; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px }
+td.wb { color: #7B3FA8 } td.am { color: #B35E12 }
+.sub { font-size: 28px; color: #4A5263 }
+.cards { display: flex; gap: 32px }
+.card { flex: 1; background: #FFFDF9; border: 1px solid #E2DDD3; border-radius: 16px; padding: 26px 32px }
+.card p { font-size: 26px; line-height: 1.35 }
+.card.tint { background: #ECE6F2; border: none }
+.grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px }
+.grid .card h3 { font-family: 'Rubik', Arial, sans-serif; font-size: 32px; font-weight: 600; color: #7B3FA8; margin-bottom: 10px }
+.grid .card p { font-size: 25px; color: #4A5263 }
+.foot { position: absolute; left: 128px; bottom: 56px; width: 1664px; font-size: 26px; color: #7B3FA8; font-weight: 500 }
+.big { font-family: 'Rubik', Arial, sans-serif; font-size: 84px; font-weight: 600; line-height: 1.05; color: #7B3FA8 }
+.bar-label { font-size: 26px; color: #1E2433; white-space: nowrap; font-weight: 500 }
+</style></head><body>
+
+<section id="cover" class="dark" style="padding:128px;justify-content:space-between;gap:0">
+<p style="font-size:28px;color:#C9A2E8;letter-spacing:4px;text-transform:uppercase;font-weight:500">Годовой проект · Чекпойнт 3 · ML, часть A</p>
+<div style="display:flex;flex-direction:column;gap:40px">
+<h1 style="font-family:'Rubik', Arial, sans-serif;font-size:100px;font-weight:600;line-height:1.08">Линейные модели<br>на разреженных признаках</h1>
+<p style="font-size:36px;line-height:1.4;color:#C4CAD6;width:1400px">Оценка 1–5 по тексту отзыва. 172 эксперимента на WB и Amazon, финальная модель проверена на тесте один раз</p>
+</div>
+<div style="display:flex;gap:64px;align-items:end">
+<div style="display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;color:#8E97A8">Команда</p><p style="font-size:30px">Никита Червов · Светлана Жумлякова</p></div>
+<div style="display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;color:#8E97A8">Ноутбук</p><p style="font-size:30px">experiments/part_a/part_a.ipynb</p></div>
+</div>
+</section>
+
+<section id="protocol">
+<h2>Протокол: учимся на train, выбираем по валидации</h2>
+<div style="display:flex;gap:96px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:32px;width:520px">
+<div><p class="big">172</p><p class="sub">запуска в 9 группах на двух датасетах</p></div>
+<div><p class="big">80 / 20</p><p class="sub">fit и валидация внутри train, разбиение по товарам</p></div>
+<div><p class="big" style="color:#B35E12">1 раз</p><p class="sub">замер на тесте, только для финальной модели</p></div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px">
+<table>
+<tr class="head"><th>Выборка</th><th>WB</th><th>Amazon</th></tr>
+<tr><td>fit</td><td>191 457</td><td>192 532</td></tr>
+<tr><td>валидация</td><td>50 138</td><td>46 766</td></tr>
+<tr><td>тест</td><td>58 127</td><td>60 736</td></tr>
+<tr><td>доля пятёрок в train</td><td>75.9%</td><td>65.5%</td></tr>
+</table>
+<div class="cards" style="margin-top:20px">
+<div class="card"><p><b>Метрики:</b> macro-F1 главная, MAE вторая.</p></div>
+<div class="card"><p><b>Часть A:</b> только линейные модели, без DL. Нелинейные — часть B.</p></div>
+</div>
+</div>
+</div>
+<p class="foot">Сдвиги порогов и Optuna подбираются внутри fit. Валидация в подборе не участвует</p>
+</section>
+
+<section id="features">
+<h2>Признаки: биграммы дают почти весь прирост</h2>
+<p class="sub">logreg C=2 с весами классов, macro-F1 на валидации</p>
+<table>
+<tr class="head"><th style="width:56%">Признаки</th><th>WB</th><th>Amazon</th></tr>
+<tr><td>Только слова</td><td>0.432</td><td>0.492</td></tr>
+<tr><td>+ биграммы (бейзлайн)</td><td>0.457</td><td>0.522</td></tr>
+<tr><td>+ триграммы, 300k признаков</td><td>0.458</td><td class="top">0.526</td></tr>
+<tr><td>Нормализованный текст (эмодзи, «!», цифры, ё)</td><td>0.460</td><td>0.523</td></tr>
+<tr><td>Стемминг · лемматизация</td><td>0.460 · 0.459</td><td>0.517 · —</td></tr>
+<tr><td>Символьные n-граммы 2–5 вместо слов</td><td>0.443</td><td>0.501</td></tr>
+<tr><td>Мета-признаки: поля формы, длина, пунктуация</td><td class="top">0.461</td><td>0.525</td></tr>
+</table>
+<div class="cards">
+<div class="card"><p><b>Биграммы:</b> +0.025 на WB и +0.030 на Amazon.</p></div>
+<div class="card"><p><b>Остальное</b> меняет macro-F1 меньше чем на 0.005.</p></div>
+<div class="card"><p><b>Символы</b> хуже слов и обучаются в 4–6 раз дольше.</p></div>
+</div>
+</section>
+
+<section id="models">
+<h2>Модели: лидеры почти равны</h2>
+<p class="sub">Лучшие признаки, веса классов, лучший macro-F1 семейства на валидации</p>
+<table>
+<tr class="head"><th style="width:44%">Модель</th><th style="width:24%">Лучший параметр</th><th>WB</th><th>Amazon</th></tr>
+<tr><td>LinearSVC</td><td>C 0.03 · 0.1</td><td class="top">0.468</td><td class="top">0.530</td></tr>
+<tr><td>NB-SVM (logreg на NB-весах)</td><td>C 1</td><td>0.466</td><td>0.528</td></tr>
+<tr><td>Ridge classifier</td><td>alpha 10</td><td>0.464</td><td class="top">0.530</td></tr>
+<tr><td>Логистическая регрессия</td><td>C 0.5–1</td><td>0.463</td><td class="top">0.530</td></tr>
+<tr><td>SGD (hinge, log, modified Huber)</td><td>alpha 1e-5 · 3e-6</td><td>0.453</td><td>0.529</td></tr>
+<tr><td>Naive Bayes (Complement, Multinomial)</td><td>alpha 0.1–1</td><td>0.448</td><td>0.512</td></tr>
+<tr><td>Passive-aggressive</td><td>—</td><td>0.399</td><td>0.474</td></tr>
+</table>
+<p class="foot">Лидеры в пределах 0.005 друг от друга. Больше решает правило решения — следующий слайд</p>
+</section>
+
+<section id="decision">
+<h2>Главный рычаг: правило решения, а не модель</h2>
+<p class="sub">Лучшие признаки, валидация. Сдвиги порогов подобраны на out-of-fold предсказаниях fit</p>
+<table>
+<tr class="head"><th style="width:52%">Обучение и правило решения</th><th>WB F1</th><th>WB MAE</th><th>Amazon F1</th><th>Amazon MAE</th></tr>
+<tr><td>Веса классов, argmax</td><td>0.461</td><td>0.367</td><td>0.526</td><td>0.359</td></tr>
+<tr><td>Без весов, argmax</td><td>0.438</td><td>0.314</td><td>0.503</td><td>0.317</td></tr>
+<tr><td>Корень из весов, argmax</td><td>0.469</td><td>0.310</td><td>0.533</td><td>0.310</td></tr>
+<tr><td>Андерсэмплинг до редкого класса</td><td>0.437</td><td>0.437</td><td>0.505</td><td>0.434</td></tr>
+<tr><td>Без весов + сдвиги порогов, logreg C=1</td><td class="top">0.484</td><td>0.306</td><td class="top">0.544</td><td>0.316</td></tr>
+<tr><td>Без весов + медиана распределения</td><td>0.469</td><td class="top">0.289</td><td>0.532</td><td class="top">0.294</td></tr>
+</table>
+<div class="cards">
+<div class="card tint"><p><b>+0.02 macro-F1</b> на обоих датасетах от сдвигов вместо весов при обучении.</p></div>
+<div class="card tint"><p><b>Одна модель, два правила:</b> сдвиги для macro-F1, медиана для MAE.</p></div>
+</div>
+</section>
+
+<section id="negative">
+<h2>Что не сработало — тоже результат</h2>
+<div class="grid">
+<div class="card"><h3>Символьные n-граммы</h3><p>Хуже слов на 0.014–0.025. Помогают только SVM (+0.008), он всё равно ниже logreg.</p></div>
+<div class="card"><h3>Лемматизация, стемминг</h3><p>На уровне нормализованного текста. На Amazon стемминг −0.006.</p></div>
+<div class="card"><h3>Отбор по χ²</h3><p>100k признаков — как полный набор, меньше — хуже.</p></div>
+<div class="card"><h3>Андерсэмплинг</h3><p>Худшая MAE. Срезание только пятёрок убивает 2★: F1 0.06 на WB.</p></div>
+<div class="card"><h3>Регрессия + пороги</h3><p>Ridge-регрессия хуже классификации даже с подобранными порогами: 0.441 / 0.484.</p></div>
+<div class="card"><h3>Чистка train</h3><p>Короткие отзывы, дубликаты, отзывы о доставке: ±0.003, в пределах шума.</p></div>
+</div>
+<p class="foot">Категория товара, Naive Bayes и passive-aggressive тоже ниже бейзлайна или наравне с ним</p>
+</section>
+
+<section id="extra">
+<h2>Word2vec и Optuna: прироста по macro-F1 нет</h2>
+<table>
+<tr class="head"><th style="width:52%">Валидация</th><th>WB F1</th><th>WB MAE</th><th>Amazon F1</th><th>Amazon MAE</th></tr>
+<tr><td>Лучший без векторов</td><td>0.484</td><td>0.306</td><td class="top">0.544</td><td>0.316</td></tr>
+<tr><td>Только усреднённые word2vec, SVM</td><td>0.402</td><td>0.547</td><td>0.469</td><td>0.526</td></tr>
+<tr><td>TF-IDF + word2vec с весами IDF + сдвиги</td><td class="top">0.485</td><td>0.307</td><td class="top">0.544</td><td>0.314</td></tr>
+<tr><td>TF-IDF + word2vec + медиана</td><td>0.476</td><td class="top">0.285</td><td>0.534</td><td class="top">0.293</td></tr>
+<tr><td>Optuna, 40 trial, подбор внутри fit</td><td>0.475</td><td>0.309</td><td>0.542</td><td>0.311</td></tr>
+</table>
+<div class="cards">
+<div class="card"><p><b>Word2vec:</b> +0.001 по macro-F1 — шум, обучение в 5–7 раз дольше. Польза только для MAE.</p></div>
+<div class="card"><p><b>Покрытие на WB 63%:</b> в RusCorpora нет служебных слов, в том числе «не».</p></div>
+<div class="card"><p><b>Optuna</b> сошлась к NB-SVM почти без весов, ниже ручного подбора.</p></div>
+</div>
+</section>
+
+<section id="test">
+<h2>Финальная модель на тесте: только текст</h2>
+<p class="sub">TF-IDF + logreg C=1 без весов. Мета-признаки — в части B. Обучение на всём train, тест замерен один раз</p>
+<div style="display:flex;gap:80px;align-items:start">
+<div style="width:700px;display:flex;flex-direction:column;gap:16px">
+<p style="font-size:28px;font-weight:600">macro-F1 на тесте</p>
+<div style="display:flex;gap:28px;flex-wrap:wrap">
+<div style="display:flex;gap:10px;align-items:center"><div style="width:26px;height:26px;background:#B9B3A8;border-radius:6px"></div><p style="font-size:24px;color:#4A5263;white-space:nowrap">бейзлайн</p></div>
+<div style="display:flex;gap:10px;align-items:center"><div style="width:26px;height:26px;background:#7B3FA8;border-radius:6px"></div><p style="font-size:24px;color:#4A5263;white-space:nowrap">финальная, WB</p></div>
+<div style="display:flex;gap:10px;align-items:center"><div style="width:26px;height:26px;background:#E07B22;border-radius:6px"></div><p style="font-size:24px;color:#4A5263;white-space:nowrap">финальная, Amazon</p></div>
+</div>
+<div style="display:flex;gap:72px;align-items:end;height:400px;border-bottom:2px solid #C4C0B8;padding-left:24px">
+<div style="display:flex;gap:4px;align-items:end">
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:110px"><p class="bar-label">0.457</p><div style="width:110px;height:305px;background:#B9B3A8;border-radius:4px 4px 0 0"></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:110px"><p class="bar-label" style="font-weight:600">0.484</p><div style="width:110px;height:323px;background:#7B3FA8;border-radius:4px 4px 0 0"></div></div>
+</div>
+<div style="display:flex;gap:4px;align-items:end">
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:110px"><p class="bar-label">0.520</p><div style="width:110px;height:347px;background:#B9B3A8;border-radius:4px 4px 0 0"></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:110px"><p class="bar-label" style="font-weight:600">0.546</p><div style="width:110px;height:364px;background:#E07B22;border-radius:4px 4px 0 0"></div></div>
+</div>
+</div>
+<div style="display:flex;gap:72px;padding-left:24px">
+<p style="font-size:26px;color:#4A5263;width:224px;text-align:center">Wildberries</p>
+<p style="font-size:26px;color:#4A5263;width:224px;text-align:center">Amazon</p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<table>
+<tr class="head"><th style="width:40%">Тест</th><th>WB F1</th><th>WB MAE</th><th>Am. F1</th><th>Am. MAE</th></tr>
+<tr><td>Бейзлайн</td><td>0.457</td><td>0.368</td><td>0.520</td><td>0.382</td></tr>
+<tr><td>Сдвиги порогов</td><td class="top">0.484</td><td>0.301</td><td class="top">0.546</td><td>0.325</td></tr>
+<tr><td>Медиана</td><td>0.470</td><td class="top">0.281</td><td>0.532</td><td class="top">0.311</td></tr>
+<tr><td style="color:#4A5263">Валидация, сдвиги</td><td style="color:#4A5263">0.482</td><td style="color:#4A5263">0.308</td><td style="color:#4A5263">0.544</td><td style="color:#4A5263">0.316</td></tr>
+</table>
+<div class="card tint"><p><b>Тест согласуется с валидацией.</b> +0.027 / +0.026 macro-F1 к бейзлайну, MAE с медианой −0.087 / −0.071.</p></div>
+<div class="card"><p><b>Без мета-признаков</b> WB теряет 0.0016 на валидации — в пределах шума.</p></div>
+</div>
+</div>
+</section>
+
+<section id="conclusions" class="dark" style="gap:56px">
+<h2>Выводы и что дальше</h2>
+<div style="display:flex;gap:80px">
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<p style="font-size:28px;color:#C9A2E8;letter-spacing:3px;text-transform:uppercase;font-weight:500">Что узнали</p>
+<ul style="font-size:30px;line-height:1.4;color:#DDE1E8">
+<li>Правило решения даёт больше, чем выбор модели</li>
+<li>Из признаков работают только биграммы</li>
+<li>Линейные семейства почти равны при сильной регуляризации</li>
+<li>Самые трудные оценки — 2 и 3: F1 0.17–0.33</li>
+<li>Тест подтвердил валидацию: 0.484 / 0.546</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<p style="font-size:28px;color:#F2A65A;letter-spacing:3px;text-transform:uppercase;font-weight:500">Дальше</p>
+<ul style="font-size:30px;line-height:1.4;color:#DDE1E8">
+<li>Сравнить с нелинейными моделями части B</li>
+<li>Ансамбль: logreg и NB-SVM с моделями части B</li>
+<li>Уточнить у куратора, можно ли word2vec</li>
+<li>Чекпойнт 4: сервис FastAPI с POST /forward</li>
+</ul>
+</div>
+</div>
+</section>
+</body></html>
