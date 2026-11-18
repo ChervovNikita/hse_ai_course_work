@@ -3,53 +3,72 @@
 <style>
 @page { size: 1920px 1080px; margin: 0 }
 html, body { margin: 0; padding: 0 }
-section { width: 1920px; height: 1080px; position: relative; box-sizing: border-box; overflow: hidden; page-break-after: always; break-after: page; background: #F7F5F0; color: #1E2433; font-family: 'IBM Plex Sans', Arial, sans-serif; padding: 112px 128px; display: flex; flex-direction: column; gap: 40px }
+section { width: 1920px; height: 1080px; position: relative; box-sizing: border-box; overflow: hidden; page-break-after: always; break-after: page; background: #F7F5F0; color: #1E2433; font-family: 'IBM Plex Sans', Arial, sans-serif; padding: 104px 128px; display: flex; flex-direction: column; gap: 34px }
 section.dark { background: #1E2433; color: #F7F5F0 }
 h1, h2, h3, p, ul, ol { margin: 0 }
-h2 { font-family: 'Rubik', Arial, sans-serif; font-size: 60px; font-weight: 600; line-height: 1.15 }
+h2 { font-family: 'Rubik', Arial, sans-serif; font-size: 58px; font-weight: 600; line-height: 1.15 }
 ul { padding-left: 1.1em }
 li { margin-bottom: 8px }
-table { border-collapse: collapse; width: 100%; font-size: 28px }
-th, td { padding: 0.32em 0.6em; border-bottom: 1px solid #D9D4CA; font-weight: 400; text-align: right }
+table { border-collapse: collapse; width: 100%; font-size: 27px }
+th, td { padding: 0.3em 0.6em; border-bottom: 1px solid #D9D4CA; font-weight: 400; text-align: right }
 th { font-weight: 600; white-space: nowrap }
 th:first-child, td:first-child { text-align: left }
 tr.head { background: #ECE6F2 }
+tr.pick td:first-child { font-weight: 600 }
 td.top { font-weight: 600; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px }
-td.wb { color: #7B3FA8 } td.am { color: #B35E12 }
-.sub { font-size: 28px; color: #4A5263 }
+td.note { color: #4A5263; font-size: 22px; white-space: nowrap }
+td.dim { color: #8E97A8 }
+.tag { display: inline-block; font-size: 20px; font-weight: 600; color: #7B3FA8; background: #ECE6F2; border-radius: 8px; padding: 2px 10px; margin-left: 10px; vertical-align: middle }
+.tag.am { color: #B35E12; background: #F6E7D8 }
+.step { font-size: 24px; color: #7B3FA8; letter-spacing: 3px; text-transform: uppercase; font-weight: 600 }
+.sub { font-size: 27px; color: #4A5263 }
 .cards { display: flex; gap: 32px }
-.card { flex: 1; background: #FFFDF9; border: 1px solid #E2DDD3; border-radius: 16px; padding: 26px 32px }
-.card p { font-size: 26px; line-height: 1.35 }
+.card { flex: 1; background: #FFFDF9; border: 1px solid #E2DDD3; border-radius: 16px; padding: 24px 30px }
+.card p { font-size: 25px; line-height: 1.35 }
 .card.tint { background: #ECE6F2; border: none }
-.grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px }
-.grid .card h3 { font-family: 'Rubik', Arial, sans-serif; font-size: 32px; font-weight: 600; color: #7B3FA8; margin-bottom: 10px }
-.grid .card p { font-size: 25px; color: #4A5263 }
-.foot { position: absolute; left: 128px; bottom: 56px; width: 1664px; font-size: 26px; color: #7B3FA8; font-weight: 500 }
-.big { font-family: 'Rubik', Arial, sans-serif; font-size: 84px; font-weight: 600; line-height: 1.05; color: #7B3FA8 }
+.grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px }
+.grid .card h3 { font-family: 'Rubik', Arial, sans-serif; font-size: 30px; font-weight: 600; color: #7B3FA8; margin-bottom: 8px }
+.grid .card p { font-size: 23px; color: #4A5263 }
+.foot { position: absolute; left: 128px; bottom: 52px; width: 1664px; font-size: 25px; color: #7B3FA8; font-weight: 500 }
+.big { font-family: 'Rubik', Arial, sans-serif; font-size: 80px; font-weight: 600; line-height: 1.05; color: #7B3FA8 }
 .bar-label { font-size: 26px; color: #1E2433; white-space: nowrap; font-weight: 500 }
+.flow { display: flex; gap: 14px; align-items: stretch }
+.flow div { flex: 1; background: #FFFDF9; border: 1px solid #E2DDD3; border-radius: 14px; padding: 18px 20px }
+.flow b { display: block; font-family: 'Rubik', Arial, sans-serif; font-size: 26px; color: #7B3FA8; margin-bottom: 6px }
+.flow p { font-size: 21px; color: #4A5263; line-height: 1.3 }
+td.pick { background: #ECE6F2; font-weight: 600 }
+.legend-top { font-weight: 600; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 5px; color: #1E2433 }
+.legend-pick { font-weight: 600; background: #ECE6F2; padding: 0 8px; border-radius: 6px; color: #1E2433 }
+table.steps { font-size: 24px }
+table.steps td { padding: 0.16em 0.6em }
+table.steps td.var, table.steps th.var { text-align: left }
+tr.group td { border-top: 3px solid #C9BFD6 }
+td.stepcell { font-family: 'Rubik', Arial, sans-serif; font-weight: 600; font-size: 30px; color: #7B3FA8; vertical-align: top; border-right: 1px solid #D9D4CA; line-height: 1.2 }
+td.stepcell span { font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 20px; font-weight: 500; color: #4A5263 }
+.ci { font-size: 20px; color: #4A5263; font-weight: 400 }
 </style></head><body>
 
 <section id="cover" class="dark" style="padding:128px;justify-content:space-between;gap:0">
 <p style="font-size:28px;color:#C9A2E8;letter-spacing:4px;text-transform:uppercase;font-weight:500">Годовой проект · Чекпойнт 3 · ML, часть A</p>
 <div style="display:flex;flex-direction:column;gap:40px">
 <h1 style="font-family:'Rubik', Arial, sans-serif;font-size:100px;font-weight:600;line-height:1.08">Линейные модели<br>на разреженных признаках</h1>
-<p style="font-size:36px;line-height:1.4;color:#C4CAD6;width:1400px">Оценка 1–5 по тексту отзыва. 172 эксперимента на WB и Amazon, финальная модель проверена на тесте один раз</p>
+<p style="font-size:36px;line-height:1.4;color:#C4CAD6;width:1450px">Оценка 1–5 по тексту отзыва на WB и Amazon. Пошаговый отбор: на каждом шаге меняем одну вещь и берём лучший вариант на валидации, тест в конце</p>
 </div>
 <div style="display:flex;gap:64px;align-items:end">
 <div style="display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;color:#8E97A8">Команда</p><p style="font-size:30px">Никита Червов · Светлана Жумлякова</p></div>
-<div style="display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;color:#8E97A8">Ноутбук</p><p style="font-size:30px">experiments/part_a/part_a.ipynb</p></div>
+<div style="display:flex;flex-direction:column;gap:8px"><p style="font-size:24px;color:#8E97A8">Ноутбук</p><p style="font-size:30px">experiments/part_a/part_a_final.ipynb</p></div>
 </div>
 </section>
 
 <section id="protocol">
 <h2>Протокол: учимся на train, выбираем по валидации</h2>
-<div style="display:flex;gap:96px;align-items:start">
-<div style="display:flex;flex-direction:column;gap:32px;width:520px">
-<div><p class="big">172</p><p class="sub">запуска в 9 группах на двух датасетах</p></div>
+<div style="display:flex;gap:80px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:28px;width:500px">
 <div><p class="big">80 / 20</p><p class="sub">fit и валидация внутри train, разбиение по товарам</p></div>
-<div><p class="big" style="color:#B35E12">1 раз</p><p class="sub">замер на тесте, только для финальной модели</p></div>
+<div><p class="big">max</p><p class="sub">на каждом шаге берём лучший вариант; модели — все в пределах 0.01</p></div>
+<div><p class="big" style="color:#B35E12">тест</p><p class="sub">только для финальных моделей, в самом конце</p></div>
 </div>
-<div style="flex:1;display:flex;flex-direction:column;gap:14px">
+<div style="flex:1;display:flex;flex-direction:column;gap:18px">
 <table>
 <tr class="head"><th>Выборка</th><th>WB</th><th>Amazon</th></tr>
 <tr><td>fit</td><td>191 457</td><td>192 532</td></tr>
@@ -57,137 +76,199 @@ td.wb { color: #7B3FA8 } td.am { color: #B35E12 }
 <tr><td>тест</td><td>58 127</td><td>60 736</td></tr>
 <tr><td>доля пятёрок в train</td><td>75.9%</td><td>65.5%</td></tr>
 </table>
-<div class="cards" style="margin-top:20px">
-<div class="card"><p><b>Метрики:</b> macro-F1 главная, MAE вторая.</p></div>
-<div class="card"><p><b>Часть A:</b> только линейные модели, без DL. Нелинейные — часть B.</p></div>
+<div class="cards">
+<div class="card"><p><b>Метрики:</b> macro-F1 главная, MAE вторая. Для каждой — своя ветка отбора.</p></div>
+<div class="card"><p><b>Только текст:</b> без DL и мета-признаков, они — в части B.</p></div>
 </div>
 </div>
 </div>
-<p class="foot">Сдвиги порогов и Optuna подбираются внутри fit. Валидация в подборе не участвует</p>
+<div class="flow">
+<div><b>1. Признаки</b><p>n-граммы, текст, TF-IDF</p></div>
+<div><b>2. Модели</b><p>7 семейств, лидеры в пределах 0.01</p></div>
+<div><b>3–4. macro-F1</b><p>веса × правило, затем регуляризация</p></div>
+<div><b>5–6. MAE</b><p>то же под MAE</p></div>
+<div><b>7. Ансамбль</b><p>три лучших лидера</p></div>
+<div><b>8. Финал</b><p>лучший из лидеров и ансамбля</p></div>
+<div><b>9. Тест</b><p>и сравнение с осторожным отбором</p></div>
+</div>
 </section>
 
-<section id="features">
-<h2>Признаки: биграммы дают почти весь прирост</h2>
-<p class="sub">logreg C=2 с весами классов, macro-F1 на валидации</p>
-<table>
-<tr class="head"><th style="width:56%">Признаки</th><th>WB</th><th>Amazon</th></tr>
-<tr><td>Только слова</td><td>0.432</td><td>0.492</td></tr>
-<tr><td>+ биграммы (бейзлайн)</td><td>0.457</td><td>0.522</td></tr>
-<tr><td>+ триграммы, 300k признаков</td><td>0.458</td><td class="top">0.526</td></tr>
-<tr><td>Нормализованный текст (эмодзи, «!», цифры, ё)</td><td>0.460</td><td>0.523</td></tr>
-<tr><td>Стемминг · лемматизация</td><td>0.460 · 0.459</td><td>0.517 · —</td></tr>
-<tr><td>Символьные n-граммы 2–5 вместо слов</td><td>0.443</td><td>0.501</td></tr>
-<tr><td>Мета-признаки: поля формы, длина, пунктуация</td><td class="top">0.461</td><td>0.525</td></tr>
+<section id="features" style="gap:22px;padding-top:80px">
+<p class="step">Шаг 1 · признаки</p>
+<h2>Биграммы — главный прирост признаков</h2>
+<p class="sub">Бейзлайн-модель (logreg C=2, веса balanced), macro-F1 на валидации. Каждый подшаг стартует от выбора предыдущего. <span class="legend-pick">0.4604</span> — взятый (лучший в подшаге)</p>
+<table class="steps">
+<tr class="head"><th style="width:12%">Подшаг</th><th class="var" style="width:48%">Вариант</th><th>WB</th><th>Amazon</th></tr>
+<tr class="group"><td rowspan="5" class="stepcell">1a<br><span>n-граммы</span></td><td class="var">слова</td><td>0.4322</td><td>0.4920</td></tr>
+<tr><td class="var">слова + биграммы (бейзлайн)</td><td>0.4574</td><td>0.5224</td></tr>
+<tr><td class="var">слова + биграммы + триграммы</td><td>0.4581</td><td class="pick">0.5237</td></tr>
+<tr><td class="var">символы 2–5</td><td>0.4431</td><td>0.5006</td></tr>
+<tr><td class="var">слова + биграммы + символы 2–5</td><td class="pick">0.4595</td><td>0.5212</td></tr>
+<tr class="group"><td rowspan="4" class="stepcell">1b<br><span>текст</span></td><td class="var">сырой текст</td><td class="pick">0.4595</td><td>0.5237</td></tr>
+<tr><td class="var">нормализованный (эмодзи, «!», цифры, ё)</td><td>0.4593</td><td class="pick">0.5253</td></tr>
+<tr><td class="var">стеммы</td><td>0.4584</td><td>0.5210</td></tr>
+<tr><td class="var">леммы</td><td>0.4573</td><td class="dim">—</td></tr>
+<tr class="group"><td rowspan="5" class="stepcell">1c<br><span>TF-IDF</span></td><td class="var">по умолчанию (200k, min_df=3)</td><td>0.4595</td><td>0.5253</td></tr>
+<tr><td class="var">сырая tf вместо сублинейной</td><td>0.4588</td><td>0.5237</td></tr>
+<tr><td class="var">бинарная tf</td><td>0.4591</td><td>0.5224</td></tr>
+<tr><td class="var">50k признаков</td><td>0.4542</td><td>0.5121</td></tr>
+<tr><td class="var">полный словарь, min_df=2</td><td class="pick">0.4604</td><td class="pick">0.5345</td></tr>
 </table>
-<div class="cards">
-<div class="card"><p><b>Биграммы:</b> +0.025 на WB и +0.030 на Amazon.</p></div>
-<div class="card"><p><b>Остальное</b> меняет macro-F1 меньше чем на 0.005.</p></div>
-<div class="card"><p><b>Символы</b> хуже слов и обучаются в 4–6 раз дольше.</p></div>
-</div>
+<p class="foot">Итог шага: WB — слова, биграммы и символы 2–5 на сыром тексте; Amazon — слова до триграмм на нормализованном тексте. Полный словарь на обоих</p>
 </section>
 
 <section id="models">
-<h2>Модели: лидеры почти равны</h2>
-<p class="sub">Лучшие признаки, веса классов, лучший macro-F1 семейства на валидации</p>
+<p class="step">Шаг 2 · модели</p>
+<h2>Линейные семейства почти равны, Naive Bayes отстаёт</h2>
+<p class="sub">Признаки шага 1, веса balanced, argmax. Лучший macro-F1 семейства на своей сетке регуляризации. <span class="legend-pick">0.4727</span> — прошёл в лидеры (в пределах 0.01 от лучшего)</p>
 <table>
-<tr class="head"><th style="width:44%">Модель</th><th style="width:24%">Лучший параметр</th><th>WB</th><th>Amazon</th></tr>
-<tr><td>LinearSVC</td><td>C 0.03 · 0.1</td><td class="top">0.468</td><td class="top">0.530</td></tr>
-<tr><td>NB-SVM (logreg на NB-весах)</td><td>C 1</td><td>0.466</td><td>0.528</td></tr>
-<tr><td>Ridge classifier</td><td>alpha 10</td><td>0.464</td><td class="top">0.530</td></tr>
-<tr><td>Логистическая регрессия</td><td>C 0.5–1</td><td>0.463</td><td class="top">0.530</td></tr>
-<tr><td>SGD (hinge, log, modified Huber)</td><td>alpha 1e-5 · 3e-6</td><td>0.453</td><td>0.529</td></tr>
-<tr><td>Naive Bayes (Complement, Multinomial)</td><td>alpha 0.1–1</td><td>0.448</td><td>0.512</td></tr>
-<tr><td>Passive-aggressive</td><td>—</td><td>0.399</td><td>0.474</td></tr>
-</table>
-<p class="foot">Лидеры в пределах 0.005 друг от друга. Больше решает правило решения — следующий слайд</p>
-</section>
-
-<section id="decision">
-<h2>Главный рычаг: правило решения, а не модель</h2>
-<p class="sub">Лучшие признаки, валидация. Сдвиги порогов подобраны на out-of-fold предсказаниях fit</p>
-<table>
-<tr class="head"><th style="width:52%">Обучение и правило решения</th><th>WB F1</th><th>WB MAE</th><th>Amazon F1</th><th>Amazon MAE</th></tr>
-<tr><td>Веса классов, argmax</td><td>0.461</td><td>0.367</td><td>0.526</td><td>0.359</td></tr>
-<tr><td>Без весов, argmax</td><td>0.438</td><td>0.314</td><td>0.503</td><td>0.317</td></tr>
-<tr><td>Корень из весов, argmax</td><td>0.469</td><td>0.310</td><td>0.533</td><td>0.310</td></tr>
-<tr><td>Андерсэмплинг до редкого класса</td><td>0.437</td><td>0.437</td><td>0.505</td><td>0.434</td></tr>
-<tr><td>Без весов + сдвиги порогов, logreg C=1</td><td class="top">0.484</td><td>0.306</td><td class="top">0.544</td><td>0.316</td></tr>
-<tr><td>Без весов + медиана распределения</td><td>0.469</td><td class="top">0.289</td><td>0.532</td><td class="top">0.294</td></tr>
+<tr class="head"><th style="width:46%">Семейство</th><th style="width:22%">Сетка</th><th>WB</th><th>Amazon</th></tr>
+<tr><td>NB-SVM (logreg на NB-весах)</td><td class="note">C 0.3–3</td><td class="top pick">0.4727</td><td>0.5195</td></tr>
+<tr><td>LinearSVC</td><td class="note">C 0.01–0.3</td><td class="pick">0.4674</td><td class="pick">0.5337</td></tr>
+<tr><td>SGD, log loss</td><td class="note">alpha 3e-6 – 3e-5</td><td class="pick">0.4665</td><td class="top pick">0.5349</td></tr>
+<tr><td>Ridge classifier</td><td class="note">alpha 1–30</td><td class="pick">0.4655</td><td class="pick">0.5319</td></tr>
+<tr><td>Логистическая регрессия</td><td class="note">C 0.25–4</td><td class="pick">0.4651</td><td class="pick">0.5345</td></tr>
+<tr><td class="dim">Complement NB</td><td class="note">alpha 0.1–1</td><td class="dim">0.4492</td><td class="dim">0.5096</td></tr>
+<tr><td class="dim">Multinomial NB</td><td class="note">alpha 0.03–0.3</td><td class="dim">0.4479</td><td class="dim">0.5099</td></tr>
 </table>
 <div class="cards">
-<div class="card tint"><p><b>+0.02 macro-F1</b> на обоих датасетах от сдвигов вместо весов при обучении.</p></div>
-<div class="card tint"><p><b>Одна модель, два правила:</b> сдвиги для macro-F1, медиана для MAE.</p></div>
+<div class="card tint"><p><b>Лидеры:</b> 5 семейств на WB, 4 на Amazon — там NB-SVM отстал на 0.015.</p></div>
+<div class="card"><p><b>Разница лидеров</b> меньше 0.008, поэтому дальше настраиваем каждого отдельно, а не берём первого.</p></div>
 </div>
 </section>
 
-<section id="negative">
-<h2>Что не сработало — тоже результат</h2>
-<div class="grid">
-<div class="card"><h3>Символьные n-граммы</h3><p>Хуже слов на 0.014–0.025. Помогают только SVM (+0.008), он всё равно ниже logreg.</p></div>
-<div class="card"><h3>Лемматизация, стемминг</h3><p>На уровне нормализованного текста. На Amazon стемминг −0.006.</p></div>
-<div class="card"><h3>Отбор по χ²</h3><p>100k признаков — как полный набор, меньше — хуже.</p></div>
-<div class="card"><h3>Андерсэмплинг</h3><p>Худшая MAE. Срезание только пятёрок убивает 2★: F1 0.06 на WB.</p></div>
-<div class="card"><h3>Регрессия + пороги</h3><p>Ridge-регрессия хуже классификации даже с подобранными порогами: 0.441 / 0.484.</p></div>
-<div class="card"><h3>Чистка train</h3><p>Короткие отзывы, дубликаты, отзывы о доставке: ±0.003, в пределах шума.</p></div>
-</div>
-<p class="foot">Категория товара, Naive Bayes и passive-aggressive тоже ниже бейзлайна или наравне с ним</p>
-</section>
-
-<section id="extra">
-<h2>Word2vec и Optuna: прироста по macro-F1 нет</h2>
+<section id="f1">
+<p class="step">Шаги 3–4 · ветка macro-F1</p>
+<h2>Сдвиги порогов дают больше, чем выбор модели</h2>
+<p class="sub">Для каждого лидера: веса (balanced / sqrt / без) × правило (argmax / сдвиги), затем регуляризация. macro-F1 на валидации</p>
 <table>
-<tr class="head"><th style="width:52%">Валидация</th><th>WB F1</th><th>WB MAE</th><th>Amazon F1</th><th>Amazon MAE</th></tr>
-<tr><td>Лучший без векторов</td><td>0.484</td><td>0.306</td><td class="top">0.544</td><td>0.316</td></tr>
-<tr><td>Только усреднённые word2vec, SVM</td><td>0.402</td><td>0.547</td><td>0.469</td><td>0.526</td></tr>
-<tr><td>TF-IDF + word2vec с весами IDF + сдвиги</td><td class="top">0.485</td><td>0.307</td><td class="top">0.544</td><td>0.314</td></tr>
-<tr><td>TF-IDF + word2vec + медиана</td><td>0.476</td><td class="top">0.285</td><td>0.534</td><td class="top">0.293</td></tr>
-<tr><td>Optuna, 40 trial, подбор внутри fit</td><td>0.475</td><td>0.309</td><td>0.542</td><td>0.311</td></tr>
+<tr class="head"><th style="width:17%">Лидер</th><th>WB, шаг 2</th><th>WB, после 3–4</th><th style="width:20%">выбор WB</th><th>Amazon, шаг 2</th><th>Amazon, после 3–4</th><th style="width:20%">выбор Amazon</th></tr>
+<tr><td>logreg</td><td>0.4651</td><td class="top">0.4852</td><td class="note">без весов, сдвиги, C 0.5</td><td>0.5345</td><td class="top">0.5455</td><td class="note">без весов, сдвиги, C 1</td></tr>
+<tr><td>NB-SVM</td><td>0.4727</td><td>0.4845</td><td class="note">без весов, сдвиги, C 1</td><td class="dim">—</td><td class="dim">—</td><td class="note">не лидер</td></tr>
+<tr><td>LinearSVC</td><td>0.4674</td><td>0.4810</td><td class="note">sqrt, сдвиги, C 0.03</td><td>0.5337</td><td>0.5417</td><td class="note">sqrt, сдвиги, C 0.1</td></tr>
+<tr><td>SGD</td><td>0.4665</td><td>0.4795</td><td class="note">sqrt, сдвиги</td><td>0.5349</td><td>0.5435</td><td class="note">sqrt, сдвиги</td></tr>
+<tr><td>Ridge</td><td>0.4655</td><td>0.4761</td><td class="note">sqrt, сдвиги</td><td>0.5319</td><td>0.5410</td><td class="note">sqrt, сдвиги</td></tr>
 </table>
 <div class="cards">
-<div class="card"><p><b>Word2vec:</b> +0.001 по macro-F1 — шум, обучение в 5–7 раз дольше. Польза только для MAE.</p></div>
-<div class="card"><p><b>Покрытие на WB 63%:</b> в RusCorpora нет служебных слов, в том числе «не».</p></div>
-<div class="card"><p><b>Optuna</b> сошлась к NB-SVM почти без весов, ниже ручного подбора.</p></div>
+<div class="card tint"><p><b>+0.008…0.020 macro-F1</b> от сдвигов порогов, подобранных на out-of-fold предсказаниях fit.</p></div>
+<div class="card"><p><b>Без весов + argmax</b> — худший вариант у всех: двойки почти не предсказываются.</p></div>
+<div class="card"><p><b>logreg</b> выходит в лидеры только после настройки: на шаге 2 он последний на WB.</p></div>
+</div>
+</section>
+
+<section id="mae">
+<p class="step">Шаги 5–6 · ветка MAE</p>
+<h2>Под MAE лучше всего медиана распределения</h2>
+<p class="sub">Те же шаги с целью MAE. Правила: argmax, медиана распределения (только у моделей с вероятностями), сдвиги под MAE. MAE на валидации, меньше — лучше</p>
+<table>
+<tr class="head"><th style="width:17%">Лидер</th><th>WB, шаг 2</th><th>WB, после 5–6</th><th style="width:20%">выбор WB</th><th>Amazon, шаг 2</th><th>Amazon, после 5–6</th><th style="width:20%">выбор Amazon</th></tr>
+<tr><td>logreg</td><td>0.3781</td><td class="top">0.2805</td><td class="note">без весов, медиана, C 1</td><td>0.3472</td><td class="top">0.2894</td><td class="note">без весов, медиана, C 2</td></tr>
+<tr><td>NB-SVM</td><td>0.3528</td><td>0.2892</td><td class="note">без весов, сдвиги MAE</td><td class="dim">—</td><td class="dim">—</td><td class="note">не лидер</td></tr>
+<tr><td>LinearSVC</td><td>0.3609</td><td>0.2924</td><td class="note">без весов, сдвиги MAE, C 0.1</td><td>0.3489</td><td>0.3024</td><td class="note">без весов, сдвиги MAE, C 0.3</td></tr>
+<tr><td>SGD</td><td>0.3786</td><td>0.3005</td><td class="note">sqrt, сдвиги MAE</td><td>0.3455</td><td>0.2952</td><td class="note">без весов, медиана</td></tr>
+<tr><td>Ridge</td><td>0.3639</td><td>0.2968</td><td class="note">без весов, сдвиги MAE</td><td>0.3574</td><td>0.3055</td><td class="note">без весов, сдвиги MAE, α 3</td></tr>
+</table>
+<div class="cards">
+<div class="card tint"><p><b>−0.05…0.10 MAE</b> к argmax с весами: под MAE веса классов не нужны.</p></div>
+<div class="card"><p><b>Медиана</b> выигрывает у сдвигов под MAE и не убивает 2★: F1 по двойкам на тесте 0.19.</p></div>
+</div>
+</section>
+
+<section id="final">
+<p class="step">Шаги 7–8 · ансамбль и финальный выбор</p>
+<h2>Ансамбль выиграл только на Amazon по macro-F1</h2>
+<p class="sub">Настроенные лидеры и ансамбль трёх лучших, валидация. <span class="legend-pick">0.4852</span> — взятый (лучший в столбце)</p>
+<table>
+<tr class="head"><th style="width:30%">Модель</th><th>WB F1</th><th>Amazon F1</th><th>WB MAE</th><th>Amazon MAE</th></tr>
+<tr><td>logreg</td><td class="pick">0.4852</td><td>0.5455</td><td class="pick">0.2805</td><td class="pick">0.2894</td></tr>
+<tr><td>Ridge</td><td>0.4761</td><td>0.5410</td><td>0.2968</td><td>0.3055</td></tr>
+<tr><td>LinearSVC</td><td>0.4810</td><td>0.5417</td><td>0.2924</td><td>0.3024</td></tr>
+<tr><td>SGD</td><td>0.4795</td><td>0.5435</td><td>0.3005</td><td>0.2952</td></tr>
+<tr><td>NB-SVM</td><td>0.4845</td><td class="dim">—</td><td>0.2892</td><td class="dim">—</td></tr>
+<tr><td>Ансамбль трёх лучших</td><td>0.4826</td><td class="pick">0.5462</td><td>0.2873</td><td>0.3002</td></tr>
+</table>
+<div class="cards">
+<div class="card tint"><p><b>Amazon, macro-F1:</b> ансамбль logreg + SGD + LinearSVC, +0.0007 к logreg.</p></div>
+<div class="card"><p><b>Остальные три ячейки:</b> logreg. Ансамбль хуже своего лучшего участника.</p></div>
+<div class="card"><p><b>Финальный logreg</b> без весов: сдвиги для macro-F1, медиана для MAE.</p></div>
 </div>
 </section>
 
 <section id="test">
-<h2>Финальная модель на тесте: только текст</h2>
-<p class="sub">TF-IDF + logreg C=1 без весов. Мета-признаки — в части B. Обучение на всём train, тест замерен один раз</p>
-<div style="display:flex;gap:80px;align-items:start">
-<div style="width:700px;display:flex;flex-direction:column;gap:16px">
-<p style="font-size:28px;font-weight:600">macro-F1 на тесте</p>
-<div style="display:flex;gap:28px;flex-wrap:wrap">
-<div style="display:flex;gap:10px;align-items:center"><div style="width:26px;height:26px;background:#B9B3A8;border-radius:6px"></div><p style="font-size:24px;color:#4A5263;white-space:nowrap">бейзлайн</p></div>
-<div style="display:flex;gap:10px;align-items:center"><div style="width:26px;height:26px;background:#7B3FA8;border-radius:6px"></div><p style="font-size:24px;color:#4A5263;white-space:nowrap">финальная, WB</p></div>
-<div style="display:flex;gap:10px;align-items:center"><div style="width:26px;height:26px;background:#E07B22;border-radius:6px"></div><p style="font-size:24px;color:#4A5263;white-space:nowrap">финальная, Amazon</p></div>
+<p class="step">Шаг 9 · тест</p>
+<h2>Финальные модели на тесте</h2>
+<p class="sub">Обучение на всём train, тест в самом конце. Для каждой метрики — своя финальная модель</p>
+<div style="display:flex;gap:72px;align-items:start">
+<div style="width:640px;display:flex;flex-direction:column;gap:16px">
+<p style="font-size:27px;font-weight:600">macro-F1 на тесте</p>
+<div style="display:flex;gap:24px;flex-wrap:wrap">
+<div style="display:flex;gap:10px;align-items:center"><div style="width:26px;height:26px;background:#B9B3A8;border-radius:6px"></div><p style="font-size:23px;color:#4A5263;white-space:nowrap">бейзлайн</p></div>
+<div style="display:flex;gap:10px;align-items:center"><div style="width:26px;height:26px;background:#7B3FA8;border-radius:6px"></div><p style="font-size:23px;color:#4A5263;white-space:nowrap">финал, WB</p></div>
+<div style="display:flex;gap:10px;align-items:center"><div style="width:26px;height:26px;background:#E07B22;border-radius:6px"></div><p style="font-size:23px;color:#4A5263;white-space:nowrap">финал, Amazon</p></div>
 </div>
 <div style="display:flex;gap:72px;align-items:end;height:400px;border-bottom:2px solid #C4C0B8;padding-left:24px">
 <div style="display:flex;gap:4px;align-items:end">
 <div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:110px"><p class="bar-label">0.457</p><div style="width:110px;height:305px;background:#B9B3A8;border-radius:4px 4px 0 0"></div></div>
-<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:110px"><p class="bar-label" style="font-weight:600">0.484</p><div style="width:110px;height:323px;background:#7B3FA8;border-radius:4px 4px 0 0"></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:110px"><p class="bar-label" style="font-weight:600">0.486</p><div style="width:110px;height:324px;background:#7B3FA8;border-radius:4px 4px 0 0"></div></div>
 </div>
 <div style="display:flex;gap:4px;align-items:end">
 <div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:110px"><p class="bar-label">0.520</p><div style="width:110px;height:347px;background:#B9B3A8;border-radius:4px 4px 0 0"></div></div>
-<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:110px"><p class="bar-label" style="font-weight:600">0.546</p><div style="width:110px;height:364px;background:#E07B22;border-radius:4px 4px 0 0"></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:110px"><p class="bar-label" style="font-weight:600">0.548</p><div style="width:110px;height:366px;background:#E07B22;border-radius:4px 4px 0 0"></div></div>
 </div>
 </div>
 <div style="display:flex;gap:72px;padding-left:24px">
-<p style="font-size:26px;color:#4A5263;width:224px;text-align:center">Wildberries</p>
-<p style="font-size:26px;color:#4A5263;width:224px;text-align:center">Amazon</p>
+<p style="font-size:25px;color:#4A5263;width:224px;text-align:center">Wildberries</p>
+<p style="font-size:25px;color:#4A5263;width:224px;text-align:center">Amazon</p>
 </div>
 </div>
-<div style="flex:1;display:flex;flex-direction:column;gap:24px">
-<table>
-<tr class="head"><th style="width:40%">Тест</th><th>WB F1</th><th>WB MAE</th><th>Am. F1</th><th>Am. MAE</th></tr>
+<div style="flex:1;display:flex;flex-direction:column;gap:22px">
+<table style="font-size:25px">
+<tr class="head"><th style="width:38%">Тест</th><th>WB F1</th><th>WB MAE</th><th>Am. F1</th><th>Am. MAE</th></tr>
 <tr><td>Бейзлайн</td><td>0.457</td><td>0.368</td><td>0.520</td><td>0.382</td></tr>
-<tr><td>Сдвиги порогов</td><td class="top">0.484</td><td>0.301</td><td class="top">0.546</td><td>0.325</td></tr>
-<tr><td>Медиана</td><td>0.470</td><td class="top">0.281</td><td>0.532</td><td class="top">0.311</td></tr>
-<tr><td style="color:#4A5263">Валидация, сдвиги</td><td style="color:#4A5263">0.482</td><td style="color:#4A5263">0.308</td><td style="color:#4A5263">0.544</td><td style="color:#4A5263">0.316</td></tr>
+<tr><td>Финал под macro-F1</td><td class="top">0.486</td><td>0.296</td><td class="top">0.548</td><td>0.333</td></tr>
+<tr><td>Финал под MAE</td><td>0.482</td><td class="top">0.274</td><td>0.536</td><td class="top">0.306</td></tr>
+<tr><td class="dim">Валидация, под macro-F1</td><td class="dim">0.485</td><td class="dim">0.309</td><td class="dim">0.546</td><td class="dim">0.319</td></tr>
+<tr><td class="dim">Валидация, под MAE</td><td class="dim">0.476</td><td class="dim">0.281</td><td class="dim">0.536</td><td class="dim">0.289</td></tr>
 </table>
-<div class="card tint"><p><b>Тест согласуется с валидацией.</b> +0.027 / +0.026 macro-F1 к бейзлайну, MAE с медианой −0.087 / −0.071.</p></div>
-<div class="card"><p><b>Без мета-признаков</b> WB теряет 0.0016 на валидации — в пределах шума.</p></div>
+<div class="card tint"><p><b>Тест согласуется с валидацией.</b> К бейзлайну: macro-F1 +0.029 / +0.028, MAE −0.094 / −0.076.</p></div>
+<div class="card"><p><b>Трудные классы</b> — 2★ и 3★: F1 0.19 / 0.32 на WB, 0.34 / 0.39 на Amazon.</p></div>
 </div>
 </div>
+</section>
+
+<section id="compare">
+<p class="step">Тест · значимость</p>
+<h2>Улучшение к бейзлайну значимо во всех ячейках</h2>
+<p class="sub">Тест, парный бутстрап по товарам, 2000 повторов. Разница — финальная модель минус сравниваемая; для MAE меньше — лучше. В скобках 95% интервал</p>
+<table>
+<tr class="head"><th style="width:22%"></th><th>WB macro-F1</th><th>WB MAE</th><th>Amazon macro-F1</th><th>Amazon MAE</th></tr>
+<tr><td>Бейзлайн</td><td>0.457</td><td>0.368</td><td>0.520</td><td>0.382</td></tr>
+<tr><td>Осторожный отбор (порог 0.003)</td><td>0.482</td><td>0.292</td><td>0.540</td><td>0.309</td></tr>
+<tr><td><b>Финал (жадный отбор)</b></td><td class="top">0.486</td><td class="top">0.274</td><td class="top">0.548</td><td class="top">0.306</td></tr>
+<tr class="group"><td>vs бейзлайн</td><td class="pick">+0.029 <span class="ci">[+0.024, +0.035]</span></td><td class="pick">−0.094 <span class="ci">[−0.101, −0.088]</span></td><td class="pick">+0.028 <span class="ci">[+0.024, +0.032]</span></td><td class="pick">−0.076 <span class="ci">[−0.081, −0.070]</span></td></tr>
+<tr><td>vs осторожный</td><td>+0.004 <span class="ci">[−0.001, +0.009]</span></td><td class="pick">−0.018 <span class="ci">[−0.022, −0.015]</span></td><td class="pick">+0.008 <span class="ci">[+0.005, +0.012]</span></td><td class="pick">−0.003 <span class="ci">[−0.005, −0.001]</span></td></tr>
+</table>
+<div class="cards">
+<div class="card tint"><p><b>К бейзлайну:</b> все четыре улучшения значимы, интервалы далеко от нуля.</p></div>
+<div class="card"><p><b>К осторожному отбору:</b> значимо в трёх ячейках из четырёх. WB macro-F1 +0.004 — на границе (P = 0.95).</p></div>
+<div class="card"><p><b>Каждый шаг</b> по отдельности в пределах шума, но вместе они дают значимый прирост.</p></div>
+</div>
+<p class="foot">Заливка — интервал не содержит ноль</p>
+</section>
+
+
+<section id="explore">
+<p class="step">Разведка · part_a.ipynb</p>
+<h2>Что ещё пробовали и не взяли</h2>
+<div class="grid">
+<div class="card"><h3>Мета-признаки</h3><p>Поля формы, длина, пунктуация: +0.002–0.004. Перенесены в часть B.</p></div>
+<div class="card"><h3>Word2vec</h3><p>TF-IDF + векторы: +0.001 macro-F1, обучение в 5–7 раз дольше. На WB покрыто 63% токенов, нет «не».</p></div>
+<div class="card"><h3>Optuna, 40 trial</h3><p>Сошлась к NB-SVM почти без весов: 0.475 / 0.542 — ниже ручного подбора.</p></div>
+<div class="card"><h3>Андерсэмплинг</h3><p>Худшая MAE. Срезание только пятёрок убивает 2★: F1 0.06 на WB.</p></div>
+<div class="card"><h3>Регрессия + пороги</h3><p>Ridge-регрессия хуже классификации даже с подобранными порогами: 0.441 / 0.484.</p></div>
+<div class="card"><h3>χ² и чистка train</h3><p>Отбор признаков и удаление коротких отзывов, дубликатов: ±0.003, шум.</p></div>
+</div>
+<p class="foot">Калиброванный SVM, категория товара и passive-aggressive тоже не дали прироста</p>
 </section>
 
 <section id="conclusions" class="dark" style="gap:56px">
@@ -197,17 +278,18 @@ td.wb { color: #7B3FA8 } td.am { color: #B35E12 }
 <p style="font-size:28px;color:#C9A2E8;letter-spacing:3px;text-transform:uppercase;font-weight:500">Что узнали</p>
 <ul style="font-size:30px;line-height:1.4;color:#DDE1E8">
 <li>Правило решения даёт больше, чем выбор модели</li>
-<li>Из признаков работают только биграммы</li>
-<li>Линейные семейства почти равны при сильной регуляризации</li>
-<li>Самые трудные оценки — 2 и 3: F1 0.17–0.33</li>
-<li>Тест подтвердил валидацию: 0.484 / 0.546</li>
+<li>Главный прирост признаков — биграммы; символы и триграммы добавляют ещё немного</li>
+<li>Мелкие шаги в пределах шума вместе дают значимый прирост</li>
+<li>Финал — logreg без весов: сдвиги для F1, медиана для MAE; на Amazon для F1 — ансамбль</li>
+<li>Тест: 0.486 / 0.548 macro-F1, MAE 0.274 / 0.306</li>
+<li>Трудные оценки — 2 и 3: F1 0.19–0.39</li>
 </ul>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:24px">
 <p style="font-size:28px;color:#F2A65A;letter-spacing:3px;text-transform:uppercase;font-weight:500">Дальше</p>
 <ul style="font-size:30px;line-height:1.4;color:#DDE1E8">
-<li>Сравнить с нелинейными моделями части B</li>
-<li>Ансамбль: logreg и NB-SVM с моделями части B</li>
+<li>Часть B: нелинейные модели и мета-признаки</li>
+<li>Ансамбль logreg с моделями части B</li>
 <li>Уточнить у куратора, можно ли word2vec</li>
 <li>Чекпойнт 4: сервис FastAPI с POST /forward</li>
 </ul>
